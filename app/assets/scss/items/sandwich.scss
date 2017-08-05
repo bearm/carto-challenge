@@ -2,12 +2,11 @@
 
 .sandwich {
   position: absolute;
-  right: 0;
+  left: 8px;
   height: 14px;
   padding: 25px 15px 25px 10px;
-  z-index: 103;
   cursor: pointer;
-  .lines {
+  .sandwichLines {
     position: relative;
     width: 20px;
     height: 2px;
@@ -24,7 +23,7 @@
     }
     &:before {
       top: -6px;
-    }NN
+    }
     &:after {
       top: 6px;
     }

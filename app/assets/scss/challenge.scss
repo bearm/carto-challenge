@@ -1,12 +1,46 @@
 @import "mixins";
 @import "icons";
+@import "reset";
 @import "items/menu";
 @import "items/sandwich";
 @import "items/map";
 
-#map {
-  height: 100%;
+body {
+  font-size: 14px;
+  overflow-x: hidden;
+  -ms-overflow-style: scrollbar;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  color: $gray;
+}
+
+.display_table {
+  display: table;
   width: 100%;
-  border: 2px solid $carto;
-  border-radius: 2px;
+  height: 100%;
+}
+
+.display_table_cell {
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+}
+
+.icon_base{
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  vertical-align: middle;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  &.style_icon{
+    background-image: icon(pencil, $white);
+  }
+  &.search_icon{
+    background-image: icon(glass, $white);
+  }
+  &.choropleth_icon{
+    background-image: icon(map, $white);
+  }
 }

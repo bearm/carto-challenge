@@ -46,7 +46,7 @@ var MapClass = function () {
 
     this.addTileLayer = function (theme) {
         var newLayer = L.tileLayer("https://{s}.tile.thunderforest.com/" + theme + "/{z}/{x}/{y}.png?apikey=" + THUNDERFOREST_API_KEY, {
-            attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+            attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>',
             apikey: THUNDERFOREST_API_KEY,
             maxZoom: 10,
             minZoom: 2
@@ -116,7 +116,6 @@ var MapClass = function () {
                 radius = 16;
                 break;
         }
-        console.log(x, radius);
         return radius;
     };
 

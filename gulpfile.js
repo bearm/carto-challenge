@@ -14,5 +14,5 @@ gulp.task('build-css', function() {
 gulp.task('build', ['build-css']);
 
 gulp.task('watch', function() {
-    gulp.watch('assets/styles/sass/**/*.scss', ['sass']);
+    gulp.watch('app/assets/scss/**/*.scss', ['build-css']);
 });

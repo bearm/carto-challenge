@@ -25,13 +25,26 @@ var ChallengeClass = function () {
     /*INTERFACE FUNCTIONS*/
     this.toggleMenu = function () {
         var sandwich = document.getElementById('sandwichLines');
-        var controls = document.getElementById('sandwichLines');
+        var controls = document.getElementById('menu');
         sandwich.classList.toggle('close');
         controls.classList.toggle('collapsed');
     };
+    this.switchSection = function (section) {
+        var activeTab = document.getElementsByClassName("tab active")[0];
+        var contentTab = document.getElementsByClassName("tabContent active")[0];
 
-    this.showSliderValue = function (slider, value) {
-        document.getElementById(slider).innerHTML = value;
+        if (!activeTab.classList.contains(section)) {
+            var newActiveTab = document.getElementsByClassName("tab " + section)[0];
+            var newContentTab = document.getElementsByClassName("tabContent " + section)[0];
+
+            activeTab.classList.toggle('active');
+            contentTab.classList.toggle('active');
+            newActiveTab.classList.toggle('active');
+            newContentTab.classList.toggle('active');
+        }
+    };
+    this.showValue = function (element, value) {
+        document.getElementById(element).innerHTML = value;
     };
 
     this.initialize();

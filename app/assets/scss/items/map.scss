@@ -1,0 +1,9 @@
+@import "../mixins";
+
+#map {
+  height: 600px;
+  width: 600px;
+  border: 2px solid $carto;
+  border-radius: 2px;
+  margin-left: 60px;
+}
