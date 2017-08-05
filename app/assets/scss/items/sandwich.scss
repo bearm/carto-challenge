@@ -1,0 +1,49 @@
+@import "../mixins";
+
+.sandwich {
+  position: absolute;
+  right: 0;
+  height: 14px;
+  padding: 25px 15px 25px 10px;
+  z-index: 103;
+  cursor: pointer;
+  .lines {
+    position: relative;
+    width: 20px;
+    height: 2px;
+    background-color: $white;
+    @include transition(0.3s);
+    &:before,
+    &:after {
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: $white;
+      @include transition(0.3s);
+      content: '';
+    }
+    &:before {
+      top: -6px;
+    }NN
+    &:after {
+      top: 6px;
+    }
+    &.close {
+      background-color: transparent;
+      &:before {
+        top: 0;
+        @include transform(rotate3d(0,0,1,-45deg));
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        background-color: $white;
+      }
+      &:after {
+        top: 0;
+        @include transform(rotate3d(0,0,1,45deg));
+        -webkit-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+        background-color: $white;
+      }
+    }
+  }
+}

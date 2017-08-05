@@ -1,0 +1,98 @@
+@import "icons";
+
+$blue: #5a9ff1;
+$red : #fa4472;
+$orange: #ef5160;
+
+$google: #d34836;
+$twitter: #54abee;
+$facebook: #4c66a4;
+
+$carto: #CDD2D4;
+$white: #FFFFFF;
+$black: #000000;
+
+@mixin ellipsis() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin cover-background() {
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+@mixin rounded($radio: 3px) {
+  border-radius: $radio;
+  -moz-border-radius: $radio;
+  -webkit-border-radius: $radio;
+}
+
+@mixin box-shadow($shadows : 0 2px 2px 0 rgba(0, 0, 0, 0.2)) {
+  -moz-box-shadow: $shadows;
+  -webkit-box-shadow: $shadows;
+  box-shadow: $shadows;
+}
+
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=#{$opacity})";
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content;
+  }
+
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+
+  @keyframes #{$name} {
+    @content;
+  }
+}
+
+@mixin transition($transition...) {
+  -ms-transition: $transition;
+  -moz-transition: $transition;
+  -o-transition: $transition;
+  -webkit-transition: $transition;
+  transition: $transition;
+}
+
+@mixin transition-delay($delay...) {
+  -ms-transition-delay: $delay;
+  -moz-transition-delay: $delay;
+  -o-transition-delay: $delay;
+  -webkit-transition-delay: $delay;
+  transition-delay: $delay;
+}
+
+@mixin transform($transforms) {
+  -moz-transform: $transforms;
+  -o-transform: $transforms;
+  -ms-transform: $transforms;
+  -webkit-transform: $transforms;
+  transform: $transforms;
+}
+
+@mixin animation($animation) {
+  animation: $animation;
+  -ms-animation: $animation;
+  -moz-animation: $animation;
+  -webkit-animation: $animation;
+}
+
+@mixin animation-delay($delay...) {
+  -webkit-animation-delay: $delay;
+  animation-delay: $delay;
+}
+
+@mixin box-sizing() {
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}

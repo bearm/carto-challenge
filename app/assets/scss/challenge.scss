@@ -1,0 +1,12 @@
+@import "mixins";
+@import "icons";
+@import "items/menu";
+@import "items/sandwich";
+@import "items/map";
+
+#map {
+  height: 100%;
+  width: 100%;
+  border: 2px solid $carto;
+  border-radius: 2px;
+}
