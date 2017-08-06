@@ -82,11 +82,11 @@ var ChallengeClass = function () {
         controls.classList.toggle('collapsed');
     };
     this.switchSection = function (section) {
-        self.resetChoroplethMap();
         var activeTab = document.getElementsByClassName("tab active")[0];
         var contentTab = document.getElementsByClassName("tabContent active")[0];
 
         if (!activeTab.classList.contains(section)) {
+            self.resetToDefaultStyles();
             var newActiveTab = document.getElementsByClassName("tab " + section)[0];
             var newContentTab = document.getElementsByClassName("tabContent " + section)[0];
 
@@ -110,11 +110,10 @@ var ChallengeClass = function () {
         self.initValues();
         Map.restyleMap(Map.default_style);
         Map.addTileLayer(Map.default_theme);
-    };
-    this.resetChoroplethMap = function () {
         Map.setPopulation(false);
         Map.setRange(false);
-        Map.choropletMap();
+        document.getElementById("popMax").checked = false;
+        document.getElementById("rankMax").checked = false;
     };
     this.activateChoroplethMap = function (element) {
         var value = document.getElementById(element).checked;

@@ -116,15 +116,19 @@ var MapClass = function () {
         self.geoJSONLayer.eachLayer(function(featureInstanceLayer) {
             if (typeof featureInstanceLayer.feature != "undefined"){
                 var feature = featureInstanceLayer.feature;
-                var style = {};
+                var newStyle = {};
+                newStyle['fillOpacity'] = self.default_style['fillOpacity'];
+                newStyle['radius'] = self.default_style['radius'];
+                newStyle['fillColor'] = self.default_style['fillColor'];
+
                 if (self.population){
-                    style['fillColor'] = self.getPopulationColor(feature.properties.pop_max);
+                    newStyle['fillColor'] = self.getPopulationColor(feature.properties.pop_max);
                 }
                 if (self.range){
-                    style['fillOpacity'] = feature.properties.rank_max / 16;
-                    style['radius'] = self.getRangeRadius(feature.properties.rank_max);
+                    newStyle['fillOpacity'] = feature.properties.rank_max / 16;
+                    newStyle['radius'] = self.getRangeRadius(feature.properties.rank_max);
                 }
-                featureInstanceLayer.setStyle(style);
+                featureInstanceLayer.setStyle(newStyle);
             }
         });
     };
