@@ -52,7 +52,6 @@ var MapClass = function () {
         if (typeof(L) !== 'undefined' && geoData != null && geoData.features.length > 0 ){
             self.map = L.map("map", {center: [self.latitude, self.longitude], zoom: self.default_zoom});
             self.addTileLayer(self.default_theme);
-            self.attachEvents();
             self.addMarkers(geoData);
         }else{
             return false;
