@@ -20,7 +20,7 @@ var ChallengeClass = function () {
     };
 
     this.getMapData = function (url, successCallback) {
-        if (isValidURL(url)){
+        if (self.isValidURL(url)){
             var httpRequest = new XMLHttpRequest();
             httpRequest.addEventListener("load", successCallback);
             httpRequest.addEventListener("error", function () {
@@ -33,7 +33,7 @@ var ChallengeClass = function () {
         }
     };
 
-    function isValidURL(url){
+    this.isValidURL = function(url){
         var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 
         if(RegExp.test(url)){

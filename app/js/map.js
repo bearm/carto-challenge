@@ -49,7 +49,7 @@ var MapClass = function () {
     };
 
     this.buildMap = function (geoData) {
-        if (typeof(L) !== 'undefined' && geoData != null && geoData.length > 0 ){
+        if (typeof(L) !== 'undefined' && geoData != null && geoData.features.length > 0 ){
             self.map = L.map("map", {center: [self.latitude, self.longitude], zoom: self.default_zoom});
             self.addTileLayer(self.default_theme);
             self.attachEvents();
