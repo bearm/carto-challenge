@@ -191,7 +191,7 @@ var MapClass = function () {
         if (self.currentLayer != null){
             self.map.removeLayer(self.currentLayer)
         }
-        self.currentLayer = L.tileLayer('../carto-challenge/app/assets/tiles2/{z}/{x}/{y}.png', {
+        self.currentLayer = L.tileLayer('./app/assets/tiles2/{z}/{x}/{y}.png', {
             maxZoom: 4,
             minZoom: 1
         });
