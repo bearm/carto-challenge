@@ -2,7 +2,6 @@ var ChallengeClass = function () {
     var self = this;
 
     const REQUEST_URL = 'https://xavijam.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20ne_10m_populated_places_simple&format=GeoJSON';
-
     const THEME_ELEMENT = 'theme';
     const POP_MAX = 'popMax';
     const EASTER = ['stark','tyrell','targaryen','baratheon','tully','mormont','greyjoy','clegane','lanister','arryn'];
@@ -32,7 +31,6 @@ var ChallengeClass = function () {
             return false;
         }
     };
-
     this.isValidURL = function(url){
         var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 
@@ -42,7 +40,6 @@ var ChallengeClass = function () {
             return false;
         }
     }
-
     this.successCallback = function (event) {
         var data = JSON.parse(event.target.responseText);
         Map.buildMap(data);
@@ -74,7 +71,6 @@ var ChallengeClass = function () {
         }
     };
 
-    /*INTERFACE FUNCTIONS*/
     this.toggleMenu = function () {
         var sandwich = document.getElementById('sandwichLines');
         var controls = document.getElementById('menu');
