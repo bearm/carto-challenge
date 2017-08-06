@@ -8,17 +8,15 @@ module.exports = function(config) {
         frameworks: ['mocha', 'sinon-chai'],
 
         files: [
-            'vendor/angular.js',
-            'vendor/angular-mocks.js',
-            'app/*.js',
-            'test/*.js'
+            'app/js/*.js',
+            'app/test/*.js'
         ],
 
         exclude: [
         ],
 
         preprocessors: {
-            'app/*.js': ['coverage']
+            'app/js/*.js': ['coverage']
         },
 
         coverageReporter: {
@@ -41,3 +39,4 @@ module.exports = function(config) {
         singleRun: false
     });
 };
+

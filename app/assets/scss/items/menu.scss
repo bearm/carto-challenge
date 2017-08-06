@@ -41,6 +41,9 @@
                 &.choropleth_icon {
                     background-image: icon(map, $white);
                 }
+                &.questionMark_icon {
+                    background-image: icon(question, $white);
+                }
                 &.active {
                     &.style_icon {
                         background-image: icon(pencil, rgba($white, 0.5));

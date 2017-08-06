@@ -5,7 +5,7 @@ var ChallengeClass = function () {
 
     const THEME_ELEMENT = 'theme';
     const POP_MAX = 'popMax';
-
+    const EASTER = ['stark','tyrell','targaryen','baratheon','tully','mormont','greyjoy','clegane','lanister','arryn'];
     this.initialize = function () {
         self.getMapData(self.successCallback);
         var w = window.innerWidth;
@@ -136,6 +136,11 @@ var ChallengeClass = function () {
 
     this.showPopup = function (item) {
         Map.popUpMarker(item);
+    };
+
+    this.easterEgg = function(){
+        Map.easterEgg(EASTER[Math.floor(Math.random() * 10)]);
+        self.toggleMenu();
     };
 
     this.initialize();

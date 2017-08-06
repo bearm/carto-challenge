@@ -25,3 +25,56 @@ body {
     vertical-align: middle;
     text-align: center;
 }
+
+.easterPopup {
+    padding: 30px;
+    @include rounded(10px);
+    text-align: center;
+    background: #3e3b3b;
+    color: #f4f4f4;
+    padding: 15px 0px;
+    width: 200px;
+    .text{
+        font-size: 14px;
+        font-weight: bold;
+        padding:0px 20px;
+    }
+    .house {
+        background-image: url("../g_o_t.jpg");
+        background-size: 800px;
+        width: 133px;
+        height: 202px;
+        display: inline-block;
+        margin-top: 30px;
+        &.stark {
+            background-position: -44px -298px;
+        }
+        &.tyrell {
+            background-position: -189px -298px;
+        }
+        &.targaryen {
+            background-position: -334px -298px;
+        }
+        &.baratheon {
+            background-position: -479px -298px;
+        }
+        &.tully {
+            background-position: -624px -298px;
+        }
+        &.arryn {
+            background-position: -44px -79px;
+        }
+        &.mormont {
+            background-position: -189px -79px;
+        }
+        &.greyjoy {
+            background-position: -334px -79px;
+        }
+        &.clegane {
+            background-position: -479px -79px;
+        }
+        &.lanister {
+            background-position: -624px -79px;
+        }
+    }
+}
