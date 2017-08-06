@@ -196,15 +196,13 @@ var MapClass = function () {
             minZoom: 1
         });
         self.map.addLayer(self.currentLayer);
-        navigator.geolocation.getCurrentPosition(function(position){
-            self.map.setView([position.coords.latitude, position.coords.longitude], 6);
-            L.marker(
-                [position.coords.latitude, position.coords.longitude],
-                {style: self.default_style}
-            ).addTo(self.map)
-                .bindPopup("<div class='easterPopup'> <div class='text'> Hello member of the " + (house.charAt(0).toUpperCase() + house.slice(1)) + " House. </div><div class='house " + house + "'</div>")
-                .openPopup();
-        });
+        self.map.setView([self.latitude, self.longitude], 6);
+        L.marker(
+            [self.latitude, self.longitude],
+            {style: self.default_style}
+        ).addTo(self.map)
+            .bindPopup("<div class='easterPopup'> <div class='text'> Hello member of the " + (house.charAt(0).toUpperCase() + house.slice(1)) + " House. </div><div class='house " + house + "'</div>")
+            .openPopup();
     };
 
 
