@@ -2,8 +2,7 @@ var MapClass = function () {
 
     var self = this;
 
-    const THUNDERFOREST_API_KEY = "49460fca5628445ab71eaced1c9be786";
-    const MAP_THEMES = {
+    var MAP_THEMES = {
         OpenCycleMap: "cycle",
         Transport: "transport",
         Landscape: "outdoors",
@@ -13,22 +12,27 @@ var MapClass = function () {
         MobileAtlas: "mobile-atlas",
         Neighbourhood: "neighbourhood"
     };
-    const DEFAULT_THEME = MAP_THEMES['Pioneer'];
-    const DEFAULT_ZOOM = 5;
-    const DEFAULT_STYLE =  {
-        'color': '#ffffff',
-        "fillColor": '#20ffff',
-        "weight": 0.5,
-        "radius": -6
-    };
 
+    this.default_style = null;
+    this.default_zoom = null;
+    this.default_theme = null;
+    this.thunderforest_api_key = null;
+    this.latitude = 0;
+    this.longitude = 0;
     this.map = null;
-    this.latitude = 40.5527929;
-    this.longitude = -3.63587289;
-    this.population = true;
-    this.range = true;
+    this.population = false;
+    this.range = false;
+    this.geoJSONLayer = false;
+    this.currentLayer = false;
 
     this.init = function(){
+        self.default_style = Config.default_style;
+        self.default_zoom = Config.default_zoom;
+        self.default_theme = Config.default_theme;
+        self.thunderforest_api_key = Config.thunderforest_api_key;
+        self.latitude = Config.latitude;
+        self.longitude = Config.longitude;
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position){
                 self.latitude = position.coords.latitude;
@@ -38,41 +42,63 @@ var MapClass = function () {
     };
 
     this.buildMap = function (geoData) {
-        self.map = L.map("map", {center: [self.latitude, self.longitude], zoom: DEFAULT_ZOOM});
-        self.addTileLayer(DEFAULT_THEME);
+        self.map = L.map("map", {center: [self.latitude, self.longitude], zoom: self.default_zoom});
+        self.addTileLayer(self.default_theme);
         self.attachEvents();
         self.addMarkers(geoData);
     };
 
     this.addTileLayer = function (theme) {
-        var newLayer = L.tileLayer("https://{s}.tile.thunderforest.com/" + theme + "/{z}/{x}/{y}.png?apikey=" + THUNDERFOREST_API_KEY, {
-            attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>',
-            apikey: THUNDERFOREST_API_KEY,
+        var themeValue = MAP_THEMES[theme];
+        self.currentLayer = L.tileLayer("https://{s}.tile.thunderforest.com/" + themeValue + "/{z}/{x}/{y}.png?apikey=" + self.thunderforest_api_key, {
+            attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar and <a href="http://www.freepik.com" title="Freepik">Freepik</a></a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>',
+            apikey: self.thunderforest_api_key,
             maxZoom: 10,
             minZoom: 2
         });
-
-        self.map.addLayer(newLayer);
+        self.map.addLayer(self.currentLayer);
     };
 
     this.addMarkers = function(geoData){
         geoData.features.splice(1000);
-        L.geoJSON(geoData, {
+        self.geoJSONLayer = L.geoJSON(geoData, {
             pointToLayer: function (feature, latlng) {
-                var style = DEFAULT_STYLE;
+                var style = self.default_style;
                 style['class'] = "marker_" + feature.properties.adm0_a3;
-                style['fillOpacity'] = feature.properties.rank_max / 16;
-                if (self.population){
-                    style['fillColor'] = self.getPopulationColor(feature.properties.pop_max);
-                }
-                if (self.range){
-                    style['radius'] = self.getRangeRadius(feature.properties.rank_max);
-                }
                 return L.circleMarker(latlng, style);
             }
         }).bindPopup(function (layer) {
             return self.addTooltip(layer.feature);
         }).addTo(self.map);
+    };
+    this.setPopulation = function(value){
+        self.population = value;
+    };
+    this.setRange = function(value){
+        self.range = value;
+    };
+    this.choropletMap = function(){
+        self.geoJSONLayer.eachLayer(function(featureInstanceLayer) {
+            if (typeof featureInstanceLayer.feature != "undefined"){
+                var feature = featureInstanceLayer.feature;
+                var style = {};
+                if (self.population){
+                    style['fillColor'] = self.getPopulationColor(feature.properties.pop_max);
+                }
+                if (self.range){
+                    style['fillOpacity'] = feature.properties.rank_max / 16;
+                    style['radius'] = self.getRangeRadius(feature.properties.rank_max);
+                }
+                featureInstanceLayer.setStyle(style);
+            }
+        });
+    };
+    this.restyleMap = function(newStyle) {
+        self.geoJSONLayer.eachLayer(function(featureInstanceLayer) {
+            if (typeof featureInstanceLayer.feature != "undefined"){
+                featureInstanceLayer.setStyle(newStyle);
+            }
+        });
     };
 
     this.getPopulationColor = function(x){

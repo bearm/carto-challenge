@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>CARTO CHALLENGE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="app/assets/css/challenge.css" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css"
           integrity="sha512-wcw6ts8Anuw10Mzh9Ytw4pylW8+NAD4ch3lqm9lzAsTxg0GFeJgoAtxuCLREZSC5lUXdVyo/7yfsqFjQ4S+aKw=="
@@ -26,8 +27,8 @@
             <div class="content">
                 <div class="inputItem">
                     <div class="name">Map Theme</div>
-                    <select>
-                        <option value="OpenCycleMap">OpenCycleMap</option>
+                    <select id="theme" onchange="Challenge.showValue('theme', this.value)">
+                        <option value="OpenCycleMap" selected>OpenCycleMap</option>
                         <option value="Transport">Transport</option>
                         <option value="Landscape">Landscape</option>
                         <option value="TransportDark">TransportDark</option>
@@ -38,37 +39,64 @@
                     </select>
                 </div>
                 <div class="inputItem">
-                    <div class="name">Weigth: <span class="info" id="weight">0</span></div>
-                    <input class="input" type="range" min="1" max="100" value="0" step="10" onchange="Challenge.showValue('weight', this.value)" />
-                </div>
-                <div class="inputItem">
                     <div class="name">Radius: <span class="info" id="radius">0</span></div>
-                    <input class="input" type="range" min="1" max="16" value="0" step="10" onchange="Challenge.showValue('radius', this.value)" />
+                    <input class="input radius" type="range" min="1" max="16" value="0" step="10" onchange="Challenge.showValue('radius', this.value)" />
                 </div>
                 <div class="inputItem">
-                    <div class="name">Color Opacity: <span class="info" id="opacity">0</span></div>
-                    <input class="input" type="range" min="0" max="10" value="0" step="10" onchange="Challenge.showValue('opacity', this.value)" />
+                    <div class="name">Color: <span class="info" id="fillColor">0</span></div>
+                    <input class="input fillColor" type="color" onchange="Challenge.showValue('fillColor', this.value)" />
                 </div>
                 <div class="inputItem">
-                    <div class="name">Color: <span class="info" id="color">0</span></div>
-                    <input class="input" type="color" onchange="Challenge.showValue('color', this.value)" />
+                    <div class="name">Opacity: <span class="info" id="fillOpacity">0</span></div>
+                    <input class="input fillOpacity" type="range" name="fillOpacity" min="0" max="1" step="0.1" value="1" onchange="Challenge.showValue('fillOpacity', this.value)" />
                 </div>
                 <div class="inputItem">
-                    <div class="name">Border Color: <span class="info" id="borderColor">0</span></div>
-                    <input class="input" type="color" onchange="Challenge.showValue('borderColor', this.value)" />
+                    <div class="name">Border Weigth: <span class="info" id="weight">0</span></div>
+                    <input class="input weight" type="range" min="1" max="100" value="0" step="10" onchange="Challenge.showValue('weight', this.value)" />
+                </div>
+                <div class="inputItem">
+                    <div class="name">Border Color: <span class="info" id="color">0</span></div>
+                    <input class="input color" type="color" onchange="Challenge.showValue('color', this.value)" />
+                </div>
+                <div class="restoreButton" onclick="Challenge.initValues()">
+                    <div class="display_table">
+                        <div class="display_table_cell">
+                            Restaurar campos
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="tabContent search">
-            <div class="title"> <span class="icon_base style_search"></span> SEARCH </div>
+            <div class="title"> <span class="icon_base style_search"></span> SEARCH CITY </div>
             <div class="content">
-                THIS SECTION IS TO SEARCH A CITY
+                <div class="searchCityList">
+                    <div class="cityList">
+                        <ul>
+                            <li class="city MAD">Madrid</li>
+                        </ul>
+                    </div>
+                </div>
+                <input id="searchCity" class="searchCity" name="searchCity" placeholder="Search city by name" onchange="Challenge.filterTripsByName()"/>
             </div>
         </div>
         <div class="tabContent choropleth">
             <div class="title"> <span class="icon_base style_choropleth"></span> CHOROPLETH MAPS </div>
             <div class="content">
-                THIS SECTION IS SHOW choropleth OPTIONS
+                <div class="inputItem">
+                    <div class="name">Population: </div>
+                    <div class="switch">
+                        <input type="checkbox" value="None" id="popMax" name="check" onchange="Challenge.activateChoroplethMap('popMax')"/>
+                        <label for="popMax"></label>
+                    </div>
+                </div>
+                <div class="inputItem">
+                    <div class="name">Range: </div>
+                    <div class="switch">
+                        <input type="checkbox" value="None" id="rankMax" name="check" onchange="Challenge.activateChoroplethMap('rankMax')"/>
+                        <label for="rankMax"></label>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -79,6 +107,7 @@
 <script src="https://unpkg.com/leaflet@1.1.0/dist/leaflet.js"
         integrity="sha512-mNqn2Wg7tSToJhvHcqfzLMU6J4mkOImSPTxVZAdo+lcPlk+GhZmYgACEe0x35K7YzW1zJ7XyJV/TT1MrdXvMcA=="
         crossorigin=""></script>
+<script src="app/js/config.js"></script>
 <script src="app/js/map.js"></script>
 <script src="app/js/challenge.js"></script>
 

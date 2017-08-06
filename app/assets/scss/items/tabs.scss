@@ -1,0 +1,143 @@
+@import "../mixins";
+
+.tabsContent {
+    @include transition(all 0.3s ease-in-out);
+    background: $white;
+    float: left;
+    height: 100%;
+    width: 0;
+    position: relative;
+    .tabContent {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: -100%;
+        @include transition(all 0.3s ease-in-out);
+        opacity: 0;
+        padding: 40px 20px;
+        &.active {
+            top: 0;
+        }
+        .title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 30px;
+            span {
+                display: inline-block;
+                vertical-align: middle;
+                position: relative;
+                top: -3px;
+                width: 15px;
+                height: 15px;
+                margin-right: 5px;
+                &.style_icon {
+                    background-image: icon(pencil, $gray);
+                }
+                &.search_icon {
+                    background-image: icon(glass, $gray);
+                }
+                &.choropleth_icon {
+                    background-image: icon(map, $gray);
+                }
+            }
+        }
+        .content {
+            overflow-y: scroll;
+            font-size: 12px;
+            padding-bottom: 30px;
+            height: 100%;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            .inputItem {
+                margin-top: 30px;
+                .name {
+                    font-weight: 600;
+                    color: $red;
+                    margin-bottom: 10px;
+                    span {
+                        font-size: 13px;
+                        color: $gray;
+                    }
+                }
+                .switch {
+                    width: 61px;
+                    height: 20px;
+                    background: rgba($gray, 0.5);
+                    position: relative;
+                    @include rounded(50px);
+                    @include box-shadow(inset 0px 1px 1px rgba($gray, 0.5));
+                    display: inline-block;
+                    vertical-align: middle;
+                    margin-left: 20px;
+                    &:after {
+                        content: 'OFF';
+                        color: $white;
+                        position: absolute;
+                        font-weight: bold;
+                        top: 6px;
+                        right: 8px;
+                        font-size: 10px;
+                        z-index: 0;
+                        text-shadow: 1px 1px 0 rgba($white, .15);
+                    }
+                    &:before {
+                        font-weight: bold;
+                        content: 'ON';
+                        color: $green;
+                        position: absolute;
+                        left: 8px;
+                        top: 6px;
+                        z-index: 0;
+                        font-size: 10px;
+                    }
+                    label {
+                        display: block;
+                        width: 25px;
+                        height: 14px;
+                        cursor: pointer;
+                        position: absolute;
+                        top: 3px;
+                        left: 3px;
+                        z-index: 1;
+                        background: $white;
+                        background: linear-gradient(top, $white 0%, $carto 100%);
+                        @include rounded(50px);
+                        @include transition(all 0.4s ease);
+                        @include box-shadow(0px 2px 5px 0px rgba(0, 0, 0, 0.3));
+                    }
+                    input[type=checkbox] {
+                        visibility: hidden;
+                        &:checked + label {
+                            left: 33px;
+                        }
+                    }
+                }
+            }
+        }
+        &.choropleth {
+            .content {
+                .inputItem {
+                    margin-bottom: 30px;
+                    .name {
+                        display: inline-block;
+                        vertical-align: middle;
+                        margin-bottom: 0
+                    }
+                }
+            }
+        }
+        .restoreButton {
+            margin: 40px auto;
+            width: 150px;
+            cursor: pointer;
+            height: 35px;
+            color: $white;
+            font-size: 12px;
+            font-weight: 600;
+            @include rounded(3px);
+            background: $red;
+        }
+    }
+}
