@@ -120,7 +120,7 @@ var MapClass = function () {
                     return self.addTooltip(layer.feature);
                 });
                 featureInstanceLayer.openPopup();
-                self.map.setView([featureInstanceLayer._latlng["lat"], featureInstanceLayer._latlng["lon"]], 10);
+                self.map.setView([featureInstanceLayer._latlng["lat"], featureInstanceLayer._latlng["lng"]], 10);
             }
         });
     };
