@@ -6,23 +6,42 @@ var ChallengeClass = function () {
     const THEME_ELEMENT = 'theme';
     const POP_MAX = 'popMax';
     const EASTER = ['stark','tyrell','targaryen','baratheon','tully','mormont','greyjoy','clegane','lanister','arryn'];
+
     this.initialize = function () {
-        self.getMapData(self.successCallback);
-        var w = window.innerWidth;
-        var h = window.innerHeight;
-        document.getElementById("map").style.width = (w - 60) + "px";
-        document.getElementById("map").style.height = h + "px";
+        if (document.getElementById("map") != undefined){
+            self.getMapData(REQUEST_URL, self.successCallback);
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+            document.getElementById("map").style.width = (w - 60) + "px";
+            document.getElementById("map").style.height = h + "px";
+        } else {
+            return false;
+        }
     };
 
-    this.getMapData = function (successCallback) {
-        var httpRequest = new XMLHttpRequest();
-        httpRequest.addEventListener("load", successCallback);
-        httpRequest.addEventListener("error", function () {
-            window.location.href = window.location.href.replace("index", "404");
-        });
-        httpRequest.open("GET", REQUEST_URL);
-        httpRequest.send(null);
+    this.getMapData = function (url, successCallback) {
+        if (isValidURL(url)){
+            var httpRequest = new XMLHttpRequest();
+            httpRequest.addEventListener("load", successCallback);
+            httpRequest.addEventListener("error", function () {
+                window.location.href = window.location.href.replace("index", "404");
+            });
+            httpRequest.open("GET", url);
+            httpRequest.send(null);
+        } else {
+            return false;
+        }
     };
+
+    function isValidURL(url){
+        var RegExp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
+
+        if(RegExp.test(url)){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
     this.successCallback = function (event) {
         var data = JSON.parse(event.target.responseText);
@@ -133,7 +152,6 @@ var ChallengeClass = function () {
             }
         }
     };
-
     this.showPopup = function (item) {
         Map.popUpMarker(item);
     };

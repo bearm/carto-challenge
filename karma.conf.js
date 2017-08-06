@@ -8,8 +8,10 @@ module.exports = function(config) {
         frameworks: ['mocha', 'sinon-chai'],
 
         files: [
-            'app/js/*.js',
-            'app/test/*.js'
+            'app/js/config.js',
+            'app/js/map.js',
+            'app/js/challenge.js',
+            'app/test/tests.js'
         ],
 
         exclude: [

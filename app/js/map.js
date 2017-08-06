@@ -49,10 +49,14 @@ var MapClass = function () {
     };
 
     this.buildMap = function (geoData) {
-        self.map = L.map("map", {center: [self.latitude, self.longitude], zoom: self.default_zoom});
-        self.addTileLayer(self.default_theme);
-        self.attachEvents();
-        self.addMarkers(geoData);
+        if (typeof(L) !== 'undefined' && geoData != null && geoData.length > 0 ){
+            self.map = L.map("map", {center: [self.latitude, self.longitude], zoom: self.default_zoom});
+            self.addTileLayer(self.default_theme);
+            self.attachEvents();
+            self.addMarkers(geoData);
+        }else{
+            return false;
+        }
     };
 
     this.addTileLayer = function (theme) {
