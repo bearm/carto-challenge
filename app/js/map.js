@@ -73,25 +73,6 @@ var MapClass = function () {
         self.map.addLayer(self.currentLayer);
     };
 
-    this.easterEgg = function(house){
-        if (self.currentLayer != null){
-            self.map.removeLayer(self.currentLayer)
-        }
-        self.currentLayer = L.tileLayer('../carto-challenge/app/assets/tiles2/{z}/{x}/{y}.png', {
-            maxZoom: 4,
-            minZoom: 1
-        });
-        self.map.addLayer(self.currentLayer);
-        navigator.geolocation.getCurrentPosition(function(position){
-            self.map.setView([position.coords.latitude, position.coords.longitude], 6);
-            L.marker(
-                [position.coords.latitude, position.coords.longitude],
-                {style: self.default_style}
-            ).addTo(self.map)
-                .bindPopup("<div class='easterPopup'> <div class='text'> Hello member of the " + (house.charAt(0).toUpperCase() + house.slice(1)) + " House. </div><div class='house " + house + "'</div>")
-                .openPopup();
-        });
-    };
     this.addMarkers = function(geoData){
         geoData.features.splice(1000);
         self.geoJSONLayer = L.geoJSON(geoData, {
@@ -105,32 +86,6 @@ var MapClass = function () {
         }).bindPopup(function (layer) {
             return self.addTooltip(layer.feature);
         }).addTo(self.map);
-    };
-    this.setPopulation = function(value){
-        self.population = value;
-    };
-    this.setRange = function(value){
-        self.range = value;
-    };
-    this.choropletMap = function(){
-        self.geoJSONLayer.eachLayer(function(featureInstanceLayer) {
-            if (typeof featureInstanceLayer.feature != "undefined"){
-                var feature = featureInstanceLayer.feature;
-                var newStyle = {};
-                newStyle['fillOpacity'] = self.default_style['fillOpacity'];
-                newStyle['radius'] = self.default_style['radius'];
-                newStyle['fillColor'] = self.default_style['fillColor'];
-
-                if (self.population){
-                    newStyle['fillColor'] = self.getPopulationColor(feature.properties.pop_max);
-                }
-                if (self.range){
-                    newStyle['fillOpacity'] = feature.properties.rank_max / 16;
-                    newStyle['radius'] = self.getRangeRadius(feature.properties.rank_max);
-                }
-                featureInstanceLayer.setStyle(newStyle);
-            }
-        });
     };
 
     this.restyleMap = function(newStyle) {
@@ -150,6 +105,41 @@ var MapClass = function () {
                 });
                 featureInstanceLayer.openPopup();
                 self.map.setView([featureInstanceLayer._latlng["lat"], featureInstanceLayer._latlng["lng"]], 10);
+            }
+        });
+    };
+
+    this.addTooltip = function(feature){
+        return "<div class='name'>City Name: " + feature.properties.name + "</div>" +
+            "<div class='population'>Population:  " + feature.properties.pop_max + "</div>" +
+            "<div class='rank'>Rank: " + feature.properties.rank_max + "</div>";
+    };
+
+    this.setPopulation = function(value){
+        self.population = value;
+    };
+
+    this.setRange = function(value){
+        self.range = value;
+    };
+
+    this.choropletMap = function(){
+        self.geoJSONLayer.eachLayer(function(featureInstanceLayer) {
+            if (typeof featureInstanceLayer.feature != "undefined"){
+                var feature = featureInstanceLayer.feature;
+                var newStyle = {};
+                newStyle['fillOpacity'] = self.default_style['fillOpacity'];
+                newStyle['radius'] = self.default_style['radius'];
+                newStyle['fillColor'] = self.default_style['fillColor'];
+
+                if (self.population){
+                    newStyle['fillColor'] = self.getPopulationColor(feature.properties.pop_max);
+                }
+                if (self.range){
+                    newStyle['fillOpacity'] = feature.properties.rank_max / 16;
+                    newStyle['radius'] = self.getRangeRadius(feature.properties.rank_max);
+                }
+                featureInstanceLayer.setStyle(newStyle);
             }
         });
     };
@@ -198,12 +188,24 @@ var MapClass = function () {
         return radius;
     };
 
-    this.attachEvents = function () {};
-
-    this.addTooltip = function(feature){
-        return "<div class='name'>City Name: " + feature.properties.name + "</div>" +
-            "<div class='population'>Population:  " + feature.properties.pop_max + "</div>" +
-            "<div class='rank'>Rank: " + feature.properties.rank_max + "</div>";
+    this.easterEgg = function(house){
+        if (self.currentLayer != null){
+            self.map.removeLayer(self.currentLayer)
+        }
+        self.currentLayer = L.tileLayer('../carto-challenge/app/assets/tiles2/{z}/{x}/{y}.png', {
+            maxZoom: 4,
+            minZoom: 1
+        });
+        self.map.addLayer(self.currentLayer);
+        navigator.geolocation.getCurrentPosition(function(position){
+            self.map.setView([position.coords.latitude, position.coords.longitude], 6);
+            L.marker(
+                [position.coords.latitude, position.coords.longitude],
+                {style: self.default_style}
+            ).addTo(self.map)
+                .bindPopup("<div class='easterPopup'> <div class='text'> Hello member of the " + (house.charAt(0).toUpperCase() + house.slice(1)) + " House. </div><div class='house " + house + "'</div>")
+                .openPopup();
+        });
     };
 
 
