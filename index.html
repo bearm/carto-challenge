@@ -40,7 +40,7 @@
                 </div>
                 <div class="inputItem">
                     <div class="name">Radius: <span class="info" id="radius">0</span></div>
-                    <input class="input radius" type="range" min="1" max="16" value="0" step="10" onchange="Challenge.showValue('radius', this.value)" />
+                    <input class="input radius" type="range" min="1" max="16" value="0" step="1" onchange="Challenge.showValue('radius', this.value)" />
                 </div>
                 <div class="inputItem">
                     <div class="name">Color: <span class="info" id="fillColor">0</span></div>
@@ -52,13 +52,13 @@
                 </div>
                 <div class="inputItem">
                     <div class="name">Border Weigth: <span class="info" id="weight">0</span></div>
-                    <input class="input weight" type="range" min="1" max="100" value="0" step="10" onchange="Challenge.showValue('weight', this.value)" />
+                    <input class="input weight" type="range" min="0.5" max="10" value="0" step="0.5" onchange="Challenge.showValue('weight', this.value)" />
                 </div>
                 <div class="inputItem">
                     <div class="name">Border Color: <span class="info" id="color">0</span></div>
                     <input class="input color" type="color" onchange="Challenge.showValue('color', this.value)" />
                 </div>
-                <div class="restoreButton" onclick="Challenge.initValues()">
+                <div class="restoreButton" onclick="Challenge.resetToDefaultStyles()">
                     <div class="display_table">
                         <div class="display_table_cell">
                             Restaurar campos
@@ -68,20 +68,18 @@
             </div>
         </div>
         <div class="tabContent search">
-            <div class="title"> <span class="icon_base style_search"></span> SEARCH CITY </div>
+            <div class="title"> <span class="icon_base search_icon"></span> SEARCH CITY </div>
             <div class="content">
-                <div class="searchCityList">
-                    <div class="cityList">
-                        <ul>
-                            <li class="city MAD">Madrid</li>
-                        </ul>
+                <div class="inputItem">
+                    <div class="searchCity">
+                        <input id="inputSearch" class="inputSearch" name="inputSearch" placeholder="Search city by name" onkeydown="Challenge.filterCitiesByName()"/>
+                        <ul class="cityList"></ul>
                     </div>
                 </div>
-                <input id="searchCity" class="searchCity" name="searchCity" placeholder="Search city by name" onchange="Challenge.filterTripsByName()"/>
             </div>
         </div>
         <div class="tabContent choropleth">
-            <div class="title"> <span class="icon_base style_choropleth"></span> CHOROPLETH MAPS </div>
+            <div class="title"> <span class="icon_base choropleth_icon"></span> CHOROPLETH MAPS </div>
             <div class="content">
                 <div class="inputItem">
                     <div class="name">Population: </div>
@@ -89,12 +87,26 @@
                         <input type="checkbox" value="None" id="popMax" name="check" onchange="Challenge.activateChoroplethMap('popMax')"/>
                         <label for="popMax"></label>
                     </div>
+                    <div class="legend">
+                        <p><span class="red"></span>1 - 5000</p>
+                        <p><span class="blue"></span>5000 - 15000</p>
+                        <p><span class="green"></span>15000 - 50000</p>
+                        <p><span class="yellow"></span>50000 - 100000</p>
+                        <p><span class="orange"></span>&#62; 100000</p>
+                    </div>
                 </div>
                 <div class="inputItem">
                     <div class="name">Range: </div>
                     <div class="switch">
                         <input type="checkbox" value="None" id="rankMax" name="check" onchange="Challenge.activateChoroplethMap('rankMax')"/>
                         <label for="rankMax"></label>
+                    </div>
+                    <div class="legend">
+                        <p><span class="gray">2</span>1 - 3</p>
+                        <p><span class="gray">4</span>3 - 6</p>
+                        <p><span class="gray">6</span>6 - 10</p>
+                        <p><span class="gray">10</span>10 - 16</p>
+                        <p><span class="gray">12</span>&#62; 16</p>
                     </div>
                 </div>
             </div>

@@ -3,8 +3,9 @@ var ConfigClass = function () {
     this.default_style = {
         'color': '#ffffff',
         "fillColor": '#20ffff',
+        "fillOpacity": 0.6,
         "weight": 0.5,
-        "radius": -6,
+        "radius": 6,
         "opacity": 1
     };
 

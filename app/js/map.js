@@ -2,7 +2,13 @@ var MapClass = function () {
 
     var self = this;
 
-    var MAP_THEMES = {
+    const BLUE = "#5a9ff1";
+    const RED = "#fa4472";
+    const ORANGE = "#FF8313";
+    const GREEN = "#00ff6c";
+    const YELLOW = "#ffff00";
+
+    const MAP_THEMES = {
         OpenCycleMap: "cycle",
         Transport: "transport",
         Landscape: "outdoors",
@@ -13,6 +19,8 @@ var MapClass = function () {
         Neighbourhood: "neighbourhood"
     };
 
+    this.population = false;
+    this.range = false;
     this.default_style = null;
     this.default_zoom = null;
     this.default_theme = null;
@@ -20,10 +28,9 @@ var MapClass = function () {
     this.latitude = 0;
     this.longitude = 0;
     this.map = null;
-    this.population = false;
-    this.range = false;
-    this.geoJSONLayer = false;
-    this.currentLayer = false;
+    this.geoJSONLayer = null;
+    this.currentLayer = null;
+    this.cityList = {};
 
     this.init = function(){
         self.default_style = Config.default_style;
@@ -49,6 +56,9 @@ var MapClass = function () {
     };
 
     this.addTileLayer = function (theme) {
+        if (self.currentLayer != null){
+            self.map.removeLayer(self.currentLayer)
+        }
         var themeValue = MAP_THEMES[theme];
         self.currentLayer = L.tileLayer("https://{s}.tile.thunderforest.com/" + themeValue + "/{z}/{x}/{y}.png?apikey=" + self.thunderforest_api_key, {
             attribution: '&copy; <a href="http://www.thunderforest.com/">Thunderforest</a>, &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> Icons made by <a href="https://www.flaticon.com/authors/gregor-cresnar" title="Gregor Cresnar">Gregor Cresnar and <a href="http://www.freepik.com" title="Freepik">Freepik</a></a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>',
@@ -64,7 +74,9 @@ var MapClass = function () {
         self.geoJSONLayer = L.geoJSON(geoData, {
             pointToLayer: function (feature, latlng) {
                 var style = self.default_style;
-                style['class'] = "marker_" + feature.properties.adm0_a3;
+                var className = "marker_" + feature.properties.geonameid;
+                style['className'] = className;
+                self.cityList[className] = feature.properties.name;
                 return L.circleMarker(latlng, style);
             }
         }).bindPopup(function (layer) {
@@ -100,24 +112,36 @@ var MapClass = function () {
             }
         });
     };
+    this.popUpMarker = function(className) {
+        self.geoJSONLayer.eachLayer(function(featureInstanceLayer) {
+            var feature = featureInstanceLayer.feature;
+            if (("marker_" + feature.properties.geonameid) == className){
+                featureInstanceLayer.bindPopup(function (layer) {
+                    return self.addTooltip(layer.feature);
+                });
+                featureInstanceLayer.openPopup();
+                self.map.setView([featureInstanceLayer._latlng["lat"], featureInstanceLayer._latlng["lon"]], 10);
+            }
+        });
+    };
 
     this.getPopulationColor = function(x){
         var color;
         switch (true) {
             case x >= 1 && x < 5000:
-                color = "#ff0000";
+                color = RED;
                 break;
             case x >= 5000 && x < 15000:
-                color = "#ff00ff";
+                color = BLUE;
                 break;
             case x >= 15000 && x < 50000:
-                color = "#ffff00";
+                color = GREEN;
                 break;
             case x >= 50000 && x < 100000:
-                color = "#20ffff";
+                color = YELLOW;
                 break;
             default:
-                color = "#3af04f";
+                color = ORANGE;
                 break;
         }
         return color;
