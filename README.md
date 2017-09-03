@@ -1,4 +1,4 @@
-# :earth-africa: CARTO challenge :earth-americas:
+# :earth_africa: CARTO challenge :earth_americas:
 
 ## :memo: Problem to solve "CARTO challenge frontend"
 Create a small application for styling data with the data behind this [SQL](https://xavijam.carto.com/api/v2/sql?q=SELECT%20*%20FROM%20ne_10m_populated_places_simple&format=GeoJSON)(1) and implement a component for styling it on top of the map.
