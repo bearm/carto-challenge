@@ -1,4 +1,4 @@
-var MapClass = function () {
+var MapClass = function (config) {
 
     var self = this;
 
@@ -32,13 +32,13 @@ var MapClass = function () {
     this.currentLayer = null;
     this.cityList = {};
 
-    this.init = function(){
-        self.default_style = Config.default_style;
-        self.default_zoom = Config.default_zoom;
-        self.default_theme = Config.default_theme;
-        self.thunderforest_api_key = Config.thunderforest_api_key;
-        self.latitude = Config.latitude;
-        self.longitude = Config.longitude;
+    this.init = function(config){
+        self.default_style = config.default_style;
+        self.default_zoom = config.default_zoom;
+        self.default_theme = config.default_theme;
+        self.thunderforest_api_key = config.thunderforest_api_key;
+        self.latitude = config.latitude;
+        self.longitude = config.longitude;
 
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position){
@@ -205,8 +205,16 @@ var MapClass = function () {
             .openPopup();
     };
 
+    this.resetToDefaultStyles = function(){
+        self.restyleMap(self.default_style);
+        self.addTileLayer(self.default_theme);
+        self.setPopulation(false);
+        self.setRange(false);
+    };
+    this.getCityList = function(){
+        return self.cityList;
+    };
 
-    this.init();
+    this.init(config);
 };
 
-var Map = new MapClass();

@@ -20,5 +20,3 @@ var ConfigClass = function () {
     this.longitude = -3.63587289;
 
 };
-
-var Config = new ConfigClass();
